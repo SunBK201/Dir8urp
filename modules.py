@@ -14,6 +14,7 @@ from colorama import Fore,Back,Style,init   #THE COLORAMA USED FOR DISPLAY COLOR
 init(autoreset=True)                        #-- AUTO RESET THE COLOR OF OUTPUTS --#
 from Dicts import header,Dicts_of_404_Pages_Path
 from time import sleep as WAIT
+import re
 
 #-- =======================RAW DATA AERA=================================== --#
 #--* Below are some raw data for extended modules to call with *--#
@@ -180,21 +181,16 @@ def URL_DEAL_NEXT(URLINPUTS):
 #-- main Function to convert url to standard url --#
 #-- FUNCTION receive one str param,returns a standard url like "http://example.com/admin" --#
 def Standard_URL_Convert(URLstr):
-    count=len(URLstr)
-    fnum=0
-    for i in range(count-1,-1,-1):
-        if URLstr[i]=='/' and URLstr[i-1]=='/':
-            fnum=i+1
-            break
-        elif not((URLstr[i]>='a' and URLstr[i]<='z') or (URLstr[i]>='A' and URLstr[i]<='Z') or (URLstr[i]>='0' and URLstr[i]<='9') or URLstr[i]=='+' or URLstr[i]=='/' or URLstr[i]=='?' or URLstr[i]=='%' or URLstr[i]=='#' or URLstr[i]=='&' or URLstr[i]=='=' or URLstr[i]=='.'):
-            fnum=i+1
-            break
-    newURLstr=URLstr[fnum:count]
-    if newURLstr[count-fnum-1]=='/':
-        CorrectURL="http://"+URLstr[fnum:count-1]
+    if re.match('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', URLstr) != None:
+        return URLstr
+    elif re.match(
+        '^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$',
+            URLstr) != None:
+        return "http://" + URLstr
     else:
-        CorrectURL="http://"+URLstr[fnum:count]
-    return CorrectURL
+        print(Display_Color.WRONG(PRIMARY_COLOR_DEFINE, URLstr + " is invalid !"))
+        raise Exception("Invalid URL!")
+
 
 #print(Standard_URL_Convert('http://jggz.jinan.cn/col/col1863/'))
 
