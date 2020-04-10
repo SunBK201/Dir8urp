@@ -8,7 +8,7 @@ from BDirectory import BDirectory
 from Burp_Fuzz import Burp_Fuzz
 #test
 def MAIN_MENU():
-    system("cls")
+    #system("cls")
     USER_SELECTION='UNDEFINED'
     while USER_SELECTION not in AVAILABLE_USER_SELECT:
         main_LOGO()
@@ -17,8 +17,8 @@ def MAIN_MENU():
         print("#-- Any unauthorized attack is "+PRIMARY_COLOR_DEFINE.WRONG("ILLEGAL")+", and the developer of the program is not liable for any legal disputes arising therefrom. --#")
         print('#-- TYPE "HELP" TO CHECK OUT HOW TO USE THIS TOOL --#')
         try:
-            USER_SELECTION=input()#USER`S SELECTION
-        except EOFError:
+            USER_SELECTION=input() #USER`S SELECTION
+        except Exception:
             exit(0)
         if AVAILABLE_USER_SELECT.get(USER_SELECTION) == 1:
             READ_HELP_DOUCUMENTS()
@@ -32,6 +32,6 @@ def MAIN_MENU():
             print("Maybe you can try to type 'HELP' for help\n")
         
 while True:
-    system('cls')
+    #system('cls')
     MAIN_MENU()
     
